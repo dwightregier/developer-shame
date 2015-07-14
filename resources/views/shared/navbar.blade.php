@@ -16,8 +16,8 @@
         {{-- Collect the nav links, forms, and other content for toggling --}}
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="{{ set_active("auth/register") }}">
-                    <a href="{{ route('auth.getRegister') }}"><i class="fa fa-user fa-fw"></i> Register / Login</a>
+                <li class="{{ set_active("/login") }}">
+                    <a href="{{ route('auth.getLogin') }}"><i class="fa fa-user fa-fw"></i> Register / Login</a>
                 </li>
             </ul>
         </div>

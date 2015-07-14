@@ -11,9 +11,13 @@
 |
 */
 
+// Authentication routes...
+Route::get('/login', ['as' => 'auth.getLogin', 'uses' => 'Auth\AuthController@getLogin']);
+Route::post('/login', ['as' => 'auth.postLogin', 'uses' => 'Auth\AuthController@postLogin']);
+Route::get('/logout', ['as' => 'auth.getLogout', 'uses' => 'Auth\AuthController@getLogout']);
+
 // Registration routes...
-Route::get('auth/register', ['as' => 'auth.getRegister', 'uses' => 'Auth\AuthController@getRegister']);
-Route::post('auth/register', ['as' => 'auth.postRegister', 'uses' => 'Auth\AuthController@postRegister']);
+Route::post('/register', ['as' => 'auth.postRegister', 'uses' => 'Auth\AuthController@postRegister']);
 
 Route::get('/', ['as' => 'home', function () {
     return view('home');
