@@ -6,3 +6,9 @@
     display: inline-block;
     margin-top: -5px;
 }
+
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.active>a:focus,
+.navbar-inverse .navbar-nav>.active>a:hover {
+    background-color: #337ab7;
+}
