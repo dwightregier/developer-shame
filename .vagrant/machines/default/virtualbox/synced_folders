@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/developer-shame":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/developer-shame","hostpath":"/Users/Justin/Documents/PhpstormProjects/developer-shame","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/Justin/Documents/PhpstormProjects/developer-shame","disabled":false}}}

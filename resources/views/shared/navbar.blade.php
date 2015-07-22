@@ -20,6 +20,14 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-code fa-fw"></i> Shames <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('shame.create') }}"><i class="fa fa-plus fa-fw"></i> Post a Shame</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user fa-fw"></i> Profile <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -34,7 +42,7 @@
 
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="{{ set_active("login") }}">
+                    <li class="{{ set_active('login') }}">
                         <a href="{{ route('auth.getLogin') }}"><i class="fa fa-user fa-fw"></i> Register / Login</a>
                     </li>
                 </ul>

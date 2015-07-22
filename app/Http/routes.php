@@ -26,3 +26,6 @@ Route::get('/', ['as' => 'home', function () {
 Route::get('/home', function () {
     return redirect()->route('home');
 });
+
+// Resource routes...
+Route::resource('shame', 'ShameController', ['only' => ['create', 'store']]);
