@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-
     /**
      * The shames that belong to this tag.
      *
@@ -14,6 +13,6 @@ class Tag extends Model
      */
     public function shames()
     {
-        return $this->belongsToMany('App\Shame');
+        return $this->belongsToMany('App\Shame')->withTimestamps();
     }
 }

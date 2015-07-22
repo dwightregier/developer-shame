@@ -23,7 +23,7 @@
                             <i class="fa fa-code fa-fw"></i> Shames <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('shame.create') }}"><i class="fa fa-plus fa-fw"></i> Post a Shame</a></li>
+                            <li><a href="{{ route('shames.create') }}"><i class="fa fa-plus fa-fw"></i> Post a Shame</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">

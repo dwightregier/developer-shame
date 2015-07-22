@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-8">
 
-                {!! Form::open(['route' => 'shame.store']) !!}
+                {!! Form::open(['route' => 'shames.store']) !!}
 
                     @include('shame.partials.form', ['submit_button_text' => 'Post Shame'])
 

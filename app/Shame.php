@@ -29,12 +29,32 @@ class Shame extends Model
     ];
 
     /**
+     * The user who posted the shame.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
      * The tags that belong to this shame.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tags()
     {
-        return $this->belongsToMany('App\Tag');
+        return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+
+    /**
+     * The upvotes associated with this shame.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function upvotes()
+    {
+        return $this->belongsToMany('App\User', 'upvote_shame', 'shame_id', 'user_id');
     }
 }

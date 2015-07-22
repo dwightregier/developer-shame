@@ -8,6 +8,7 @@ use App\Tag;
 use Auth;
 
 use App\Http\Requests;
+use Carbon\Carbon;
 
 class ShameController extends Controller
 {
@@ -61,5 +62,72 @@ class ShameController extends Controller
         }
 
         return redirect()->route('home');
+    }
+
+    /**
+     * Display a listing of shames with the most upvotes in the last 24 hours.
+     *
+     * @return $this
+     */
+    public function featuredShames()
+    {
+        $shames = Shame::where('created_at', '>=', Carbon::now()
+            ->subHour(24))
+            ->with('user','tags','upvotes')
+            ->get()
+            ->sortByDesc(function($shame)
+            {
+                return $shame->upvotes->count();
+            })
+            ->take(10);
+        $title = 'Featured Shames';
+        return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
+    }
+
+    /**
+     * Display a listing of the shames with the most upvotes overall.
+     *
+     * @return $this
+     */
+    public function topShames()
+    {
+        $shames = Shame::with('user','tags','upvotes')
+            ->get()
+            ->sortByDesc(function($shame){
+                return $shame->upvotes->count();
+            })
+            ->take(10);
+        $title = 'Top Shames';
+        return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
+    }
+
+    /**
+     * Display a listing of the newest shames.
+     *
+     * @return $this
+     */
+    public function newShames()
+    {
+        $shames = Shame::with('user','tags','upvotes')
+            ->orderby('created_at', 'asc')
+            ->get()
+            ->take(10);
+        $title = 'New Shames';
+        return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
+    }
+
+    /**
+     * Display a listing of random shames.
+     *
+     * @return $this
+     */
+    public function randomShames()
+    {
+        $shames = Shame::with('user','tags','upvotes')
+            ->orderByRaw("RAND()")
+            ->get()
+            ->take(10);
+        $title = 'Random Shames';
+        return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
     }
 }

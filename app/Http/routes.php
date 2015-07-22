@@ -20,12 +20,16 @@ Route::get('/logout', ['as' => 'auth.getLogout', 'uses' => 'Auth\AuthController@
 Route::post('/register', ['as' => 'auth.postRegister', 'uses' => 'Auth\AuthController@postRegister']);
 
 Route::get('/', ['as' => 'home', function () {
-    return view('home');
+    return redirect()->route('shames.featured');
 }]);
 
 Route::get('/home', function () {
-    return redirect()->route('home');
+    return redirect()->route('shames.featured');
 });
 
-// Resource routes...
-Route::resource('shame', 'ShameController', ['only' => ['create', 'store']]);
+// Shame routes...
+Route::get('shames/featured', ['as' => 'shames.featured', 'uses' => 'ShameController@featuredShames']);
+Route::get('shames/top', ['as' => 'shames.top', 'uses' => 'ShameController@topShames']);
+Route::get('shames/new', ['as' => 'shames.new', 'uses' => 'ShameController@newShames']);
+Route::get('shames/random', ['as' => 'shames.random', 'uses' => 'ShameController@randomShames']);
+Route::resource('shames', 'ShameController', ['only' => ['create', 'store']]);
