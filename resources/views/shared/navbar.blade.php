@@ -23,7 +23,21 @@
                             <i class="fa fa-code fa-fw"></i> Shames <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('shames.create') }}"><i class="fa fa-plus fa-fw"></i> Post a Shame</a></li>
+                            <li class="{{ set_active('shames/featured') }}">
+                                <a href="{{ route('shames.featured') }}"><i class="fa fa-check-circle fa-fw"></i> Featured Shames</a>
+                            </li>
+                            <li class="{{ set_active('shames/top') }}">
+                                <a href="{{ route('shames.top') }}"><i class="fa fa-arrow-up fa-fw"></i> Top Shames</a>
+                            </li>
+                            <li class="{{ set_active('shames/new') }}">
+                                <a href="{{ route('shames.new') }}"><i class="fa fa-asterisk fa-fw"></i> New Shames</a>
+                            </li>
+                            <li class="{{ set_active('shames/random') }}">
+                                <a href="{{ route('shames.random') }}"><i class="fa fa-random fa-fw"></i> Random Shames</a>
+                            </li>
+                            <li class="{{ set_active('shames/create') }}">
+                                <a href="{{ route('shames.create') }}"><i class="fa fa-plus fa-fw"></i> Post a Shame</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -42,6 +56,25 @@
 
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-code fa-fw"></i> Shames <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="{{ set_active('shames/featured') }}">
+                                <a href="{{ route('shames.featured') }}"><i class="fa fa-check-circle fa-fw"></i> Featured Shames</a>
+                            </li>
+                            <li class="{{ set_active('shames/top') }}">
+                                <a href="{{ route('shames.top') }}"><i class="fa fa-arrow-up fa-fw"></i> Top Shames</a>
+                            </li>
+                            <li class="{{ set_active('shames/new') }}">
+                                <a href="{{ route('shames.new') }}"><i class="fa fa-asterisk fa-fw"></i> New Shames</a>
+                            </li>
+                            <li class="{{ set_active('shames/random') }}">
+                                <a href="{{ route('shames.random') }}"><i class="fa fa-random fa-fw"></i> Random Shames</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="{{ set_active('login') }}">
                         <a href="{{ route('auth.getLogin') }}"><i class="fa fa-user fa-fw"></i> Register / Login</a>
                     </li>

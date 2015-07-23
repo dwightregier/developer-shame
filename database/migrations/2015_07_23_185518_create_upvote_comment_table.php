@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUpvoteShameTable extends Migration
+class CreateUpvoteCommentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,14 @@ class CreateUpvoteShameTable extends Migration
      */
     public function up()
     {
-        Schema::create('upvote_shame', function (Blueprint $table) {
+        Schema::create('upvote_comment', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
 
-            //Foreign Key Restraints
-            $table->integer('shame_id')->unsigned();
-            $table->foreign('shame_id')->references('id')->on('shames');
-
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('comment_id')->unsigned();
+            $table->foreign('comment_id')->references('id')->on('comments');
         });
     }
 
@@ -32,6 +30,6 @@ class CreateUpvoteShameTable extends Migration
      */
     public function down()
     {
-        Schema::drop('upvote_shame');
+        Schema::drop('upvote_comment');
     }
 }

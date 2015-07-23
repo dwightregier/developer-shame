@@ -15,7 +15,7 @@
                     @foreach($shames as $shame)
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                {{--<b>{!! link_to_route('shames.show', $shame->title, ['id' => $shame->id]) !!}</b>--}}
+                                <b>{!! link_to_route('shames.show', $shame->title, ['id' => $shame->id]) !!}</b>
                             </div>
                             <div class="panel-body">
                                 <div class="row">
@@ -43,7 +43,7 @@
                                         @endif
                                     </div>
                                     <div class="col-xs-8 col-sm-2">
-                                       {{-- {!! link_to_route('shames.show', "Read More", ['id' => $shame->id], ['class' => 'btn btn-primary']) !!} --}}
+                                       {!! link_to_route('shames.show', "Read More", ['id' => $shame->id], ['class' => 'btn btn-primary']) !!}
                                     </div>
                                 </div>
                             </div>

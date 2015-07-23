@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Http\Requests\StoreShameRequest;
 use App\Shame;
 use App\Tag;
@@ -9,6 +10,7 @@ use Auth;
 
 use App\Http\Requests;
 use Carbon\Carbon;
+use Parsedown;
 
 class ShameController extends Controller
 {
@@ -109,7 +111,7 @@ class ShameController extends Controller
     public function newShames()
     {
         $shames = Shame::with('user','tags','upvotes')
-            ->orderby('created_at', 'asc')
+            ->orderby('created_at', 'desc')
             ->get()
             ->take(10);
         $title = 'New Shames';
@@ -129,5 +131,22 @@ class ShameController extends Controller
             ->take(10);
         $title = 'Random Shames';
         return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $shame = Shame::findOrFail($id);
+
+        $parsedown = new Parsedown();
+        $parsedown->setBreaksEnabled(true)->setMarkupEscaped(true);
+        $shame->markdown = $parsedown->text($shame->markdown);
+        $comments = Comment::with('user','upvotes')->where('shame_id','=',$id)->get();
+        return view('shame.show')->with(['shame' => $shame,'comments' =>$comments]);
     }
 }
