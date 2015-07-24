@@ -43,7 +43,7 @@
                                         @endif
                                     </div>
                                     <div class="col-xs-8 col-sm-2">
-                                       {!! link_to_route('shames.show', "Read More", ['id' => $shame->id], ['class' => 'btn btn-primary']) !!}
+                                        {!! link_to_route('shames.show', "Read More", ['id' => $shame->id], ['class' => 'btn btn-primary']) !!}
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                 @endif
             </div>
             <div class="col-md-4">
-                @include('shared.profilenav')
+                @include('shared.shamenav')
             </div>
         </div>
     </div>

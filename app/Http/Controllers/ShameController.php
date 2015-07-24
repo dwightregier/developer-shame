@@ -19,7 +19,21 @@ class ShameController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['create', 'store']]);
+        $this->middleware('auth', ['only' => ['index', 'create', 'store']]);
+    }
+
+    /**
+     * Display a listing of shames the logged in user posts.
+     *
+     * @return $this
+     */
+    public function index()
+    {
+        $shames = Shame::where('user_id', '=', Auth::user()->id)
+            ->with('user','tags','upvotes')
+            ->get();
+        $title = 'Posted Shames';
+        return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
     }
 
     /**
@@ -83,7 +97,7 @@ class ShameController extends Controller
             })
             ->take(10);
         $title = 'Featured Shames';
-        return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
+        return view('shame.list')->with(['shames' => $shames, 'title' => $title]);
     }
 
     /**
@@ -100,7 +114,7 @@ class ShameController extends Controller
             })
             ->take(10);
         $title = 'Top Shames';
-        return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
+        return view('shame.list')->with(['shames' => $shames, 'title' => $title]);
     }
 
     /**
@@ -115,7 +129,7 @@ class ShameController extends Controller
             ->get()
             ->take(10);
         $title = 'New Shames';
-        return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
+        return view('shame.list')->with(['shames' => $shames, 'title' => $title]);
     }
 
     /**
@@ -130,7 +144,7 @@ class ShameController extends Controller
             ->get()
             ->take(10);
         $title = 'Random Shames';
-        return view('shame.index')->with(['shames' => $shames, 'title' => $title]);
+        return view('shame.list')->with(['shames' => $shames, 'title' => $title]);
     }
 
     /**

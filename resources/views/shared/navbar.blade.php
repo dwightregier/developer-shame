@@ -45,7 +45,16 @@
                             <i class="fa fa-user fa-fw"></i> Profile <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('auth.getLogout') }}">Logout</a></li>
+                            <li>
+                                <a href="{{ route('shames.index') }}" class="{{ set_active('shames') }}">
+                                    <i class="fa fa-check-circle fa-fw"></i> Posted Shames
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('auth.getLogout') }}">
+                                    <i class="fa fa-sign-out fa-fw"></i> Logout
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
