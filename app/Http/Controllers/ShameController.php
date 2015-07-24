@@ -10,6 +10,7 @@ use Auth;
 
 use App\Http\Requests;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Parsedown;
 
 class ShameController extends Controller
@@ -162,5 +163,35 @@ class ShameController extends Controller
         $shame->markdown = $parsedown->text($shame->markdown);
         $comments = Comment::with('user','upvotes')->where('shame_id','=',$id)->get();
         return view('shame.show')->with(['shame' => $shame,'comments' =>$comments]);
+    }
+
+    public function upvote(Request $request)
+    {
+        $shame = Shame::findOrFail($request->shame_id);
+        $upvotes = $shame->upvotes()->where('user_id', Auth::user()->id);
+        if($upvotes->count() == 0) {
+            $shame->upvotes()->attach(Auth::user()->id);
+        }
+        else
+        {
+            $shame = Shame::find($request->shame_id);
+            $shame->upvotes()->detach(Auth::user()->id);
+        }
+        return redirect()->back();
+    }
+
+    public function follow(Request $request)
+    {
+        $shame = Shame::findOrFail($request->shame_id);
+        $follow = $shame->follows()->where('user_id', Auth::user()->id);
+        if($follow->count() == 0) {
+            $shame->follows()->attach(Auth::user()->id);
+        }
+        else
+        {
+            $shame = Shame::find($request->shame_id);
+            $shame->follows()->detach(Auth::user()->id);
+        }
+        return redirect()->back();
     }
 }

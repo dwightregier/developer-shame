@@ -32,6 +32,8 @@ Route::get('shames/featured', ['as' => 'shames.featured', 'uses' => 'ShameContro
 Route::get('shames/top', ['as' => 'shames.top', 'uses' => 'ShameController@topShames']);
 Route::get('shames/new', ['as' => 'shames.new', 'uses' => 'ShameController@newShames']);
 Route::get('shames/random', ['as' => 'shames.random', 'uses' => 'ShameController@randomShames']);
+Route::post('shames/upvote', ['as' => 'shames.upvote', 'uses' => 'ShameController@upvote']);
+Route::post('shames/follow', ['as' => 'shames.follow', 'uses' => 'ShameController@follow']);
 Route::resource('shames', 'ShameController', ['only' => ['index', 'create', 'store', 'show']]);
 
 // Comment routes...

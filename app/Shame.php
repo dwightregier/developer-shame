@@ -57,4 +57,9 @@ class Shame extends Model
     {
         return $this->belongsToMany('App\User', 'upvote_shame', 'shame_id', 'user_id');
     }
+
+    public function follows()
+    {
+        return $this->belongsToMany('App\User', 'follow_shame', 'shame_id', 'user_id');
+    }
 }
