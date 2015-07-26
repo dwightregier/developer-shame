@@ -42,4 +42,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasMany('App\Notification');
     }
+
+    /**
+     * The badges associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function badges()
+    {
+        return $this->belongsToMany('App\Badge', 'user_badge', 'user_id', 'badge_id')->withTimestamps();
+    }
 }

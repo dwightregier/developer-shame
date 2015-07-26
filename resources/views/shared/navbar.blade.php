@@ -48,12 +48,17 @@
                             <i class="fa fa-user fa-fw"></i> Profile <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ route('shames.index') }}" class="{{ set_active('shames') }}">
+                            <li class="{{ set_active('badges') }}">
+                                <a href="{{ route('badges.index') }}">
+                                    <i class="fa fa-sign-out fa-fw"></i> Badges
+                                </a>
+                            </li>
+                            <li class="{{ set_active('shames') }}">
+                                <a href="{{ route('shames.index') }}">
                                     <i class="fa fa-check-circle fa-fw"></i> Posted Shames
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ set_active('logout') }}">
                                 <a href="{{ route('auth.getLogout') }}">
                                     <i class="fa fa-sign-out fa-fw"></i> Logout
                                 </a>

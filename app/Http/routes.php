@@ -32,6 +32,9 @@ Route::resource('shames', 'ShameController', ['only' => ['index', 'create', 'sto
 Route::post('comments/upvote', ['as' => 'comments.upvote', 'uses' => 'CommentController@upvote']);
 Route::resource('comments','CommentController', ['only' => ['index', 'store', 'edit', 'update', 'destroy']]);
 
+// Badge routes...
+Route::resource('badges', 'BadgeController', ['only' => ['index']]);
+
 // Other routes...
 Route::get('/', ['as' => 'home', function () {
     return redirect()->route('shames.featured');

@@ -19,28 +19,16 @@
                             </div>
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-xs-4 col-sm-1">
-                                        {!! Form::open(['route' => 'shames.upvote']) !!}
-                                        {!! Form::hidden('shame_id',$shame->id) !!}
-                                        @if($shame->upvotes()->where('user_id', Auth::user()->id)->count() > 0)
-                                            <i class="fa fa-arrow-down">
-                                                {!! Form::submit($shame->upvotes->count(), ['class' => 'btn btn-default']) !!}
-                                            </i>
-                                        @else
-                                            <i class="fa fa-arrow-up">
-                                                {!! Form::submit($shame->upvotes->count(), ['class' => 'btn btn-default']) !!}
-                                            </i>
-                                        @endif
-                                        {!! Form::close() !!}
-                                    </div>
-                                    <div class="col-xs-8 col-sm-9">
-                                        Created At: {{$shame->created_at}} - By:
+                                    <div class="col-xs-8">
+                                        <p>
+                                            Created At: {{$shame->created_at}}
 
-                                        @if ($shame->is_anonymous)
-                                            Anonymous
-                                        @else
-                                            {{$shame->user->display_name}}
-                                        @endif
+                                            @if ($shame->is_anonymous)
+                                                Anonymous
+                                            @else
+                                                - By: {{$shame->user->display_name}}
+                                            @endif
+                                        </p>
 
                                         @if($shame->tags->count())
                                             <div class="well well-sm">Tags:
@@ -50,17 +38,9 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="col-xs-8 col-sm-2">
-                                        {!! link_to_route('shames.show', "Read More", ['id' => $shame->id], ['class' => 'btn btn-primary']) !!}
-
-                                        {!! Form::open(['route' => 'shames.follow']) !!}
-                                        {!! Form::hidden('shame_id',$shame->id) !!}
-                                        @if($shame->follows()->where('user_id', Auth::user()->id)->count() > 0)
-                                            {!! Form::submit('Unfollow', ['class' => 'btn btn-default']) !!}
-                                        @else
-                                            {!! Form::submit('Follow', ['class' => 'btn btn-default']) !!}
-                                        @endif
-                                        {!! Form::close() !!}
+                                    <div class="col-xs-4 text-center">
+                                        {!! link_to_route('home', 'Edit', null, ['class' => 'btn btn-primary']) !!}
+                                        {!! link_to_route('home', 'Delete', null, ['class' => 'btn btn-danger']) !!}
                                     </div>
                                 </div>
                             </div>
