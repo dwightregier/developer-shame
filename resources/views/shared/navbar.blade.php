@@ -40,6 +40,9 @@
                             </li>
                         </ul>
                     </li>
+
+                    @include('shared.notifications')
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user fa-fw"></i> Profile <span class="caret"></span>

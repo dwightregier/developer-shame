@@ -22,7 +22,7 @@
                                     <div class="col-xs-4 col-sm-1">
                                         {!! Form::open(['route' => 'shames.upvote']) !!}
                                         {!! Form::hidden('shame_id',$shame->id) !!}
-                                        @if($shame->upvotes()->where('user_id', Auth::user()->id)->count() > 0)
+                                        @if (Auth::check() && $shame->upvotes()->where('user_id', Auth::user()->id)->count() > 0)
                                             <i class="fa fa-arrow-down">
                                                 {!! Form::submit($shame->upvotes->count(), ['class' => 'btn btn-default']) !!}
                                             </i>
@@ -55,7 +55,7 @@
 
                                         {!! Form::open(['route' => 'shames.follow']) !!}
                                         {!! Form::hidden('shame_id',$shame->id) !!}
-                                        @if($shame->follows()->where('user_id', Auth::user()->id)->count() > 0)
+                                        @if (Auth::check() && $shame->follows()->where('user_id', Auth::user()->id)->count() > 0)
                                             {!! Form::submit('Unfollow', ['class' => 'btn btn-default']) !!}
                                         @else
                                             {!! Form::submit('Follow', ['class' => 'btn btn-default']) !!}
