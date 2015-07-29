@@ -11,6 +11,11 @@ class Notification extends Model
         return $this->belongsTo('App\Shame');
     }
 
+    public function comment()
+    {
+        return $this->belongsTo('App\Comment');
+    }
+
     public function scopeUnread($query)
     {
         return $query->where('is_read', '=', '0');

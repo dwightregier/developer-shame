@@ -39,8 +39,10 @@
                                         @endif
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        {!! link_to_route('home', 'Edit', null, ['class' => 'btn btn-primary']) !!}
-                                        {!! link_to_route('home', 'Delete', null, ['class' => 'btn btn-danger']) !!}
+                                        {!! Form::open(['route' => ['shames.destroy', $shame->id] , 'method' => 'DELETE']) !!}
+                                            {!! link_to_route('shames.edit', 'Edit', ['id' => $shame->id], ['class' => 'btn btn-primary']) !!}
+                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                        {!! Form::close() !!}
                                     </div>
                                 </div>
                             </div>

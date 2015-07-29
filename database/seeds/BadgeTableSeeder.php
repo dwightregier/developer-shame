@@ -21,7 +21,7 @@ class BadgeTableSeeder extends Seeder
 
         DB::table('badges')->insert(['title' => 'That was Bad',
             'description' => 'Congratulations, your story was so shameful someone followed your post.',
-            'icon' => '<i class="fa fa-badges-plus fa-5x fa-fw"></i>']);
+            'icon' => '<i class="fa fa-user-plus fa-5x fa-fw"></i>']);
 
         DB::table('badges')->insert(['title' => 'You Suck',
             'description' => 'You are not the only one who thought your code is dumb, someone besides yourself upvoted your shame.',

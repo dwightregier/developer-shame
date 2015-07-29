@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Http\Requests\StoreShameRequest;
+use App\Notification;
 use App\Shame;
 use App\Tag;
 use Auth;
@@ -50,7 +51,8 @@ class ShameController extends Controller
         }
 
         return view('shame.create')->with([
-            'js_tags' => json_encode($tags)
+            'js_tags' => json_encode($tags),
+            'tags_text' => ''
         ]);
     }
 
@@ -79,6 +81,100 @@ class ShameController extends Controller
         }
 
         return redirect()->route('home');
+    }
+
+    /**
+     * Show the form for editing the shame.
+     *
+     * @param $id
+     * @return $this
+     */
+    public function edit($id)
+    {
+        $shame = Shame::findOrFail($id);
+        $shame_tags = $shame->tags()->get();
+
+        $tags_text = '';
+        foreach ($shame_tags as $tag) {
+            $tags_text .= $tag->title . ', ';
+        }
+
+        $tags = [];
+        foreach (Tag::all() as $tag) {
+            array_push($tags, $tag->title);
+        }
+
+        return view('shame.edit')->with([
+            'shame' => $shame,
+            'js_tags' => json_encode($tags),
+            'tags_text' => $tags_text,
+            'shame_tags' => $shame_tags
+        ]);
+    }
+
+    /**
+     * Update the specified comment.
+     *
+     * @param  StoreShameRequest  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(StoreShameRequest $request, $id)
+    {
+        $shame = Shame::findOrFail($id);
+        $shame->title = $request->title;
+        $shame->markdown = $request->markdown;
+        $shame->is_anonymous = $request->is_anonymous;
+        $shame->save();
+
+        $tag_titles = explode(', ', $request->tags);
+        $tag_ids = [];
+
+        foreach ($tag_titles as $tag_title) {
+            $tag = Tag::where('title', $tag_title)->first();
+
+            if ($tag) {
+                $tag_id = $tag->id;
+                array_push($tag_ids, $tag_id);
+            }
+        }
+
+        $shame->tags()->sync($tag_ids);
+
+        return redirect()->route('shames.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $shame = Shame::findOrFail($id);
+
+        if (Auth::check() && Auth::user()->id == $shame->user_id) {
+            $shame->tags()->detach();
+            $shame->upvotes()->detach();
+            $shame->follows()->detach();
+
+            $notifications = Notification::where('shame_id', '=', $id)->get();
+            foreach ($notifications as $notification) {
+                $notification->delete();
+            }
+
+            $comments = Comment::where('shame_id', '=', $id)
+                ->with('upvotes')
+                ->get();
+
+            foreach($comments as $comment) {
+                $comment->upvotes()->detach();
+                $comment->delete();
+            }
+            $shame->delete();
+        }
+        return redirect()->route('shames.index');
     }
 
     /**

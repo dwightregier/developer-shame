@@ -13,7 +13,7 @@
 
 		<div class="form-group">
 			{!! Form::label('tags', 'Tags: ', ['class' => 'sr-only']) !!}
-			{!! Form::text('tags', null, ['class' => 'form-control', 'placeholder' => 'Tags', 'size' => '60']) !!}
+			{!! Form::text('tags', $tags_text, ['class' => 'form-control', 'placeholder' => 'Tags', 'size' => '60']) !!}
 		</div>
 
 		<div class="checkbox">
