@@ -38,9 +38,11 @@
                                     <div class="col-xs-2 col-sm-1">
                                         {!! Form::open(['route' => 'comments.upvote']) !!}
                                         {!! Form::hidden('comment_id',$comment->id) !!}
-                                        <i class="fa fa-arrow-up">
-                                            {!! Form::submit($comment->upvotes->count(), ['class' => 'btn btn-default']) !!}
-                                        </i>
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fa fa-arrow-up"></i>
+                                            <br>
+                                            {{ $comment->upvotes->count() }}
+                                        </button>
                                         {!! Form::close() !!}
                                     </div>
                                     <div class="col-xs-10 col-sm-9">
