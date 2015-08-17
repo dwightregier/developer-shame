@@ -258,7 +258,6 @@ class ShameController extends Controller
     public function show($id)
     {
         $shame = Shame::findOrFail($id);
-
         $parsedown = new Parsedown();
         $parsedown->setBreaksEnabled(true)->setMarkupEscaped(true);
         $shame->markdown = $parsedown->text($shame->markdown);
@@ -269,14 +268,14 @@ class ShameController extends Controller
     public function upvote(Request $request)
     {
         $shame = Shame::findOrFail($request->shame_id);
-        $upvotes = $shame->upvotes()->where('user_id', Auth::user()->id);
-        if($upvotes->count() == 0) {
-            $shame->upvotes()->attach(Auth::user()->id);
-        }
-        else
-        {
-            $shame = Shame::find($request->shame_id);
-            $shame->upvotes()->detach(Auth::user()->id);
+        if (Auth::check()) {
+            $upvotes = $shame->upvotes()->where('user_id', Auth::user()->id);
+            if ($upvotes->count() == 0) {
+                $shame->upvotes()->attach(Auth::user()->id);
+            } else {
+                $shame = Shame::find($request->shame_id);
+                $shame->upvotes()->detach(Auth::user()->id);
+            }
         }
         return redirect()->back();
     }
@@ -284,14 +283,14 @@ class ShameController extends Controller
     public function follow(Request $request)
     {
         $shame = Shame::findOrFail($request->shame_id);
-        $follow = $shame->follows()->where('user_id', Auth::user()->id);
-        if($follow->count() == 0) {
-            $shame->follows()->attach(Auth::user()->id);
-        }
-        else
-        {
-            $shame = Shame::find($request->shame_id);
-            $shame->follows()->detach(Auth::user()->id);
+        if (Auth::check()) {
+            $follow = $shame->follows()->where('user_id', Auth::user()->id);
+            if ($follow->count() == 0) {
+                $shame->follows()->attach(Auth::user()->id);
+            } else {
+                $shame = Shame::find($request->shame_id);
+                $shame->follows()->detach(Auth::user()->id);
+            }
         }
         return redirect()->back();
     }

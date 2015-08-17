@@ -61,6 +61,10 @@ class CommentController extends Controller
         if (Auth::check() && Auth::user()->id == $comment->user_id) {
             return view('comment.edit')->with(['comment' => $comment]);
         }
+        else
+        {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -105,16 +109,16 @@ class CommentController extends Controller
         //  ->where('user_id','=',Auth::user()->id)->get();
 
         $comment = Comment::findOrFail($request->comment_id);
-        $upvotes = $comment->upvotes()->where('user_id', Auth::user()->id);
+        if (Auth::check()) {
+            $upvotes = $comment->upvotes()->where('user_id', Auth::user()->id);
 
-        if($upvotes->count() == 0) {
-            $comment->upvotes()->attach(Auth::user()->id);
+            if ($upvotes->count() == 0) {
+                $comment->upvotes()->attach(Auth::user()->id);
 
-        }
-        else
-        {
-            $comment = Comment::find($request->comment_id);
-            $comment->upvotes()->detach(Auth::user()->id);
+            } else {
+                $comment = Comment::find($request->comment_id);
+                $comment->upvotes()->detach(Auth::user()->id);
+            }
         }
         return redirect()->back();
     }
