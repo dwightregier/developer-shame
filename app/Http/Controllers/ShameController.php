@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Events\ShameWasUpdated;
 use App\Http\Requests\StoreShameRequest;
 use App\Notification;
 use App\Shame;
@@ -11,6 +12,7 @@ use Auth;
 
 use App\Http\Requests;
 use Carbon\Carbon;
+use Event;
 use Illuminate\Http\Request;
 use Parsedown;
 
@@ -140,6 +142,9 @@ class ShameController extends Controller
         }
 
         $shame->tags()->sync($tag_ids);
+
+        // Fire ShameWasUpdated event
+        Event::fire(new ShameWasUpdated($shame));
 
         return redirect()->route('shames.index');
     }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Events\CommentWasAdded;
 use Auth;
+use Event;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -40,6 +42,8 @@ class CommentController extends Controller
         $comment->user_id = Auth::user()->id;
         $comment->shame_id = $request->shame_id;
         $comment->save();
+
+        Event::fire(new CommentWasAdded($comment));
 
         return redirect()->route('shames.show', ['id' => $comment->shame_id]);
         //return redirect()->back();
