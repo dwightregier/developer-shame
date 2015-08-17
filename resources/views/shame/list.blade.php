@@ -14,7 +14,7 @@
                 @if ($shames->count())
                     @foreach($shames as $shame)
                         <div class="panel panel-default">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style ="overflow: auto">
                                 <b>{!! link_to_route('shames.show', $shame->title, ['id' => $shame->id]) !!}</b>
                             </div>
                             <div class="panel-body">
@@ -22,19 +22,7 @@
                                     <div class="col-xs-2 text-center">
                                         {!! Form::open(['route' => 'shames.upvote']) !!}
                                         {!! Form::hidden('shame_id',$shame->id) !!}
-                                        @if (Auth::check() && $shame->upvotes()->where('user_id', Auth::user()->id)->count() > 0)
-                                            <button type="submit" class="btn btn-success">
-                                                <i class="fa fa-arrow-down"></i>
-                                                <br>
-                                                {{ $shame->upvotes->count() }}
-                                            </button>
-                                        @else
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fa fa-arrow-up"></i>
-                                                <br>
-                                                {{ $shame->upvotes->count() }}
-                                            </button>
-                                        @endif
+                                        @include('upvote.upvote', ['object' => $shame])
                                         {!! Form::close() !!}
                                     </div>
                                     <div class="col-xs-7">
@@ -42,7 +30,7 @@
                                             Created At: {{$shame->created_at}}
 
                                             @if (!$shame->is_anonymous)
-                                                &mdash; By: <strong>{{$shame->user->display_name}}</strong>
+                                            &mdash; By: <strong>{{$shame->user->display_name}}</strong>
                                             @endif
                                         </p>
 

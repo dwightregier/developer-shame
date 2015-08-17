@@ -94,24 +94,27 @@ class ShameController extends Controller
     public function edit($id)
     {
         $shame = Shame::findOrFail($id);
-        $shame_tags = $shame->tags()->get();
-
-        $tags_text = '';
-        foreach ($shame_tags as $tag) {
-            $tags_text .= $tag->title . ', ';
+        if (Auth::check() && Auth::user()->id == $shame->user_id) {
+            $shame_tags = $shame->tags()->get();
+            $tags_text = '';
+            foreach ($shame_tags as $tag) {
+                $tags_text .= $tag->title . ', ';
+            }
+            $tags = [];
+            foreach (Tag::all() as $tag) {
+                array_push($tags, $tag->title);
+            }
+            return view('shame.edit')->with([
+                'shame' => $shame,
+                'js_tags' => json_encode($tags),
+                'tags_text' => $tags_text,
+                'shame_tags' => $shame_tags
+            ]);
         }
-
-        $tags = [];
-        foreach (Tag::all() as $tag) {
-            array_push($tags, $tag->title);
+        else
+        {
+            return redirect()->back();
         }
-
-        return view('shame.edit')->with([
-            'shame' => $shame,
-            'js_tags' => json_encode($tags),
-            'tags_text' => $tags_text,
-            'shame_tags' => $shame_tags
-        ]);
     }
 
     /**
@@ -124,28 +127,25 @@ class ShameController extends Controller
     public function update(StoreShameRequest $request, $id)
     {
         $shame = Shame::findOrFail($id);
-        $shame->title = $request->title;
-        $shame->markdown = $request->markdown;
-        $shame->is_anonymous = $request->is_anonymous;
-        $shame->save();
-
-        $tag_titles = explode(', ', $request->tags);
-        $tag_ids = [];
-
-        foreach ($tag_titles as $tag_title) {
-            $tag = Tag::where('title', $tag_title)->first();
-
-            if ($tag) {
-                $tag_id = $tag->id;
-                array_push($tag_ids, $tag_id);
+        if (Auth::check() && Auth::user()->id == $shame->user_id) {
+            $shame->title = $request->title;
+            $shame->markdown = $request->markdown;
+            $shame->is_anonymous = $request->is_anonymous;
+            $shame->save();
+            $tag_titles = explode(', ', $request->tags);
+            $tag_ids = [];
+            foreach ($tag_titles as $tag_title) {
+                $tag = Tag::where('title', $tag_title)->first();
+                if ($tag) {
+                    $tag_id = $tag->id;
+                    array_push($tag_ids, $tag_id);
+                }
             }
+            $shame->tags()->sync($tag_ids);
+
+            // Fire ShameWasUpdated event
+            Event::fire(new ShameWasUpdated($shame));
         }
-
-        $shame->tags()->sync($tag_ids);
-
-        // Fire ShameWasUpdated event
-        Event::fire(new ShameWasUpdated($shame));
-
         return redirect()->route('shames.index');
     }
 

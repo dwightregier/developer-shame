@@ -58,7 +58,9 @@ class CommentController extends Controller
     public function edit($id)
     {
         $comment = Comment::findOrFail($id);
-        return view('comment.edit')->with(['comment' => $comment]);
+        if (Auth::check() && Auth::user()->id == $comment->user_id) {
+            return view('comment.edit')->with(['comment' => $comment]);
+        }
     }
 
     /**
@@ -71,7 +73,10 @@ class CommentController extends Controller
     public function update(Request $request, $id)
     {
         $comment = Comment::findOrFail($id);
-        $comment->update($request->all());
+
+        if (Auth::check() && Auth::user()->id == $comment->user_id) {
+            $comment->update($request->all());
+        }
 
         return redirect()->route('comments.index');
     }
@@ -85,8 +90,11 @@ class CommentController extends Controller
     public function destroy($id)
     {
         $comment = Comment::find($id);
-        $comment->upvotes()->detach();
-        $comment->delete();
+
+        if (Auth::check() && Auth::user()->id == $comment->user_id) {
+            $comment->upvotes()->detach();
+            $comment->delete();
+        }
 
         return redirect()->route('comments.index');
     }

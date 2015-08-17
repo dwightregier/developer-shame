@@ -4,7 +4,7 @@
 
 
     <div class="container">
-        <div class="page-header">
+        <div class="page-header" style ="overflow: auto">
             <h1>{{ $shame->title }} </h1>
         </div>
         <div class="panel panel-default">
@@ -38,14 +38,10 @@
                                     <div class="col-xs-2 col-sm-1">
                                         {!! Form::open(['route' => 'comments.upvote']) !!}
                                         {!! Form::hidden('comment_id',$comment->id) !!}
-                                        <button type="submit" class="btn btn-default">
-                                            <i class="fa fa-arrow-up"></i>
-                                            <br>
-                                            {{ $comment->upvotes->count() }}
-                                        </button>
+                                        @include('upvote.upvote', ['object' => $comment])
                                         {!! Form::close() !!}
                                     </div>
-                                    <div class="col-xs-10 col-sm-9">
+                                    <div class="col-xs-10 col-sm-9" style ="overflow: auto">
                                         {!! $comment->text !!}
                                     </div>
                                 </div>

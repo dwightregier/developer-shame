@@ -58,6 +58,11 @@
                                     <i class="fa fa-check-circle fa-fw"></i> Posted Shames
                                 </a>
                             </li>
+                            <li class ="{{set_active('comments')}}">
+                                <a href="{{route('comments.index') }}">
+                                    <i class="fa fa-comments"></i> Posted Comments
+                                </a>
+                            </li>
                             <li class="{{ set_active('logout') }}">
                                 <a href="{{ route('auth.getLogout') }}">
                                     <i class="fa fa-sign-out fa-fw"></i> Logout
@@ -68,7 +73,7 @@
                 </ul>
             </div>
 
-        {{-- Anonymous links --}}
+            {{-- Anonymous links --}}
         @else
 
             <div class="collapse navbar-collapse" id="navbar-collapse">
